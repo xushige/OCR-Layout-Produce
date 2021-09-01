@@ -2,48 +2,7 @@ import os
 class Config(object):
     def __init__(self):
         super(Config, self).__init__()
-        # ## for test
-        # self.img_num = 1000
-        # self.home_dir = "/apdcephfs/share_887471/staffs/hooverhu/DDSN_resources/0_resource_for_test/"
-        # # self.home_dir = "/apdcephfs/share_887471/staffs/hooverhu/DDSN_resources/1_resource_0317/"
-
-        # # self.output_dir = "/apdcephfs/share_887471/staffs/hooverhu/DDSN_gen_data/" + "hoover_init"
-        # self.output_dir = "./hoover_test_layout"
-        # self.bg_dir = self.home_dir + "backgrounds"
-        # self.fonts_dir = self.home_dir + "fonts"
         
-        # '''
-        # 字典格式前路径后为倍数,倍数用来平衡数据集
-        # '''
-        # self.figure_path_dict = {
-        #     self.home_dir + "figure_cn": 1
-        # }
-
-        # self.text_file_path = self.home_dir + "news2016/news2016.clean"
-        # # self.table_path_dict = {
-        # #     self.home_dir + "tables_youtu": 1,
-        # #     self.home_dir + "tables_chinese": 16,
-        # #     self.home_dir + "tables_hard": 56
-        # # }
-        # self.table_path_dict = {
-        #     self.home_dir + "table": 1
-        # }
-        # self.seal_path_dict = {
-        #     self.home_dir + "seals": 1
-        # }
-        # self.equation_path_dict = {
-        #     self.home_dir + "print_equation": 1
-        # }
-        # self.handwritten_path_dict = {
-        #     self.home_dir + "handwritten": 1
-        # }
-        # self.logo_path_dict = {
-        #     self.home_dir + "figure_hard/logo":1
-        # }
-        # self.publaynet_label_path = "/data/home/hooverhu/DDSN_test_set/document"
-        # # self.publaynet_label_path = self.home_dir + "/publaynet"
-
-        ## for real
         self.img_num = 20
         self.home_dir = "/data/home/shigexu/ft_local/1_resource_0317/" #素材库
         self.output_dir = "/data/home/shigexu/ft_local/DDSN_gen_data/" + 'example' #输出目录
