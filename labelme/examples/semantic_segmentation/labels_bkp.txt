@@ -1,0 +1,16 @@
+__ignore__
+_background_
+VerticalDvidingLine
+figure
+text
+table
+footerandheader
+handwritten
+title
+caption
+equation
+seal
+watermark
+tableedge
+figureedge
+equationedge

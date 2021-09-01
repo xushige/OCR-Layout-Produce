@@ -1,0 +1,13 @@
+__ignore__
+_background_
+figure
+text
+table
+footerandheader
+handwritten
+title
+caption
+equation
+seal
+watermark
+VerticalDvidingLine
