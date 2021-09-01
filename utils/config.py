@@ -3,123 +3,118 @@ class Config(object):
     def __init__(self):
         super(Config, self).__init__()
         
-        self.img_num = 20
-        self.home_dir = "/data/home/shigexu/ft_local/1_resource_0317/" #素材库
-        self.output_dir = "/data/home/shigexu/ft_local/DDSN_gen_data/" + 'example' #输出目录
+        self.img_num = 10000
+        self.output_dir = "" #输出目录
         
-        self.bg_dir = self.home_dir + "backgrounds"
-        self.fonts_dir = self.home_dir + "fonts"
-        #字典后数字为倍数，原因在于figurehard和cn图片数量较少，保持相对平衡
+        self.bg_dir = "background-imgdir-path"
+        self.fonts_dir = "fonts-dir-path"
+        #字典后数字为倍数衡
         self.figure_path_dict = {
-            self.home_dir + "figures_publaynet": 2,
-            self.home_dir + "train2017": 1,
-            self.home_dir + "figure_hard/axis": 600,
-            self.home_dir + "figure_cn": 100
-            # self.home_dir + 'T': 100
+            "figdir-0": 200,
+            "figdir-1": 100,
+            "figdir-2": 600,
+            "figdir-3": 100
         }
         self.text_file_path = {'Chinese': [
-                                            "/data/home/shigexu/ft_local/1_resource_0317/NLP_source/news2016/news_baike_web_text.txt",
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/news2016/test_text.txt'
+                                            "text-cn-file"
                                           ],
                                 'English': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/news2016/eng_story_sents_0320.txt',
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/news2016/test_text_eng.txt'
+                                            "text-En-file"
                                            ]
         }
         self.date_path_dict = {'Chinese': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/date/test_date.txt'
+                                            "date-cn-file"
                                           ],
                                 'English': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/date/test_date_eng.txt'
+                                            "date-En-file"
                                            ]
         }
         self.author_path_dict = {'Chinese': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/author/test_author.txt'
+                                            "author-cn-file"
                                           ],
                                 'English': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/author/test_author_eng.txt'
+                                            "author-En-file"
                                            ]
         }
         self.TITLE_path_dict = {'Chinese': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/title_section/test_title.txt'
+                                            "TITLE-cn-file"
                                           ],
                                 'English': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/title_section/test_title_eng.txt'
+                                            "TITLE-En-file"
                                            ]
         }
         self.title_path_dict = {'Chinese': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/title_section/test_section.txt'
+                                            "title-cn-file"
                                           ],
                                 'English': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/title_section/test_section_eng.txt'
+                                            "title-En-file"
                                            ]
         }
         self.header_path_dict = {'Chinese': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/footerandheader/test_header.txt'
+                                            "header-cn-file"
                                           ],
                                 'English': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/footerandheader/test_header_eng.txt'
+                                            "header-En-file"
                                            ]
         }
         self.footer_path_dict = {'Chinese': [
-                                            "/data/home/shigexu/ft_local/1_resource_0317/NLP_source/footerandheader/test_footer.txt"
-                                            
+                                            "footer-cn-file"
                                           ],
                                 'English': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/footerandheader/test_footer_eng.txt'
+                                            "footer-En-file"
                                            ]
         }
         self.caption_path_dict = {'Chinese': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/caption/test_caption.txt'
+                                            "caption-cn-file"
                                           ],
                                 'English': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/caption/test_caption_eng.txt'
+                                            "caption-En-file"
                                            ]
         }
         self.list_path_dict = {'Chinese': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/list/test_list.txt'
+                                            "list-cn-file"
                                           ],
                                 'English': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/list/test_list_eng.txt'
+                                            "list-En-file"
                                            ]
         }
         self.reference_path_dict = {'Chinese': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/reference/test_reference.txt'
+                                            "reference-cn-file"
                                           ],
                                 'English': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/reference/test_reference_eng.txt'
+                                            "reference-En-file"
                                            ]
         }
         self.abstract_path_dict = {'Chinese': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/abstract/test_abstract.txt'
+                                            "abstract-cn-file"
                                           ],
                                 'English': [
-                                            '/data/home/shigexu/ft_local/1_resource_0317/NLP_source/abstract/test_abstract_eng.txt'
+                                            "abstract-En-file"
                                            ]
         }
         
         self.table_path_dict = {
-            self.home_dir + "tables_youtu": 2,
-            self.home_dir + "tables_chinese": 16,
-            self.home_dir + "tables_hard": 100
+            "tabledir-0": 200,
+            "tabledir-1": 150,
+            "tabledir-2": 100
         }
         self.seal_path_dict = {
-            self.home_dir + "seals": 1
+            "seal-dir": 10
         }
         self.equation_path_dict = {
-            self.home_dir + "printing_equation": 1
+            "equation-dir": 10
         }
         self.handwritten_path_dict = {
-            self.home_dir + "handwritten_image": 1
+            "handwritten-dir": 10
         }
         self.logo_path_dict = {
-            self.home_dir + "figure_hard/logo":10000
+            "logo-dir":10
         }
-        self.publaynet_label_path = self.home_dir + "publaynet"
+        self.publaynet_label_path = "publaynet-dir" # 包含publay的train.json 和 test.json
         
         #ppt版面和背景
-        self.ppt_label_path = self.home_dir + "ppt_layout/total_label"
-        self.ppt_backgroud_path = self.home_dir + 'ppt_background'
+        self.ppt_label_path = "ppt_layout-dir"
+        self.ppt_backgroud_path = 'ppt_background-dir'
         
 
 
