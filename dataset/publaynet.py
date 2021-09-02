@@ -40,7 +40,7 @@ class Publaynet(object):
         self.label_path = label_path
         self.train_examples = get_examples(label_path,"train")
         self.val_examples = get_examples(label_path,"val")
-
+        self.all_examples = None
 
 if __name__=="__main__":
     qw=Publaynet("E:\publaynet")
