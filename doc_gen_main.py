@@ -42,7 +42,7 @@ class batch_document_generator(object):
         
         img_id = 1
         all_template_names = []
-        modeselect = self.publaynet.all_examples if self.publaynet.all_examples else self.publaynet.train_examples
+        modeselect = self.publaynet.train_examples
         for example in modeselect:
             all_template_names.append(example)
         random.shuffle(all_template_names)
