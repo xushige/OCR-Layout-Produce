@@ -1,19 +1,103 @@
 #!/usr/bin/env python
-
 from __future__ import print_function
-
 import argparse
 import glob
 import os
 import os.path as osp
-import sys
-import cv2
 import imgviz
 import numpy as np
-from collections import Counter
 from PIL import Image
 import labelme
+import math
+import uuid
+import numpy as np
+import PIL.Image
+import PIL.ImageDraw
+import random
+def shape_to_mask(
+    img_shape, points, shape_type=None, line_width=10, point_size=5
+):
+    mask = np.zeros(img_shape[:2], dtype=np.uint8)
+    mask = PIL.Image.fromarray(mask)
+    draw = PIL.ImageDraw.Draw(mask)
+    xy = [tuple(point) for point in points]
+    if shape_type == "circle":
+        assert len(xy) == 2, "Shape of shape_type=circle must have 2 points"
+        (cx, cy), (px, py) = xy
+        d = math.sqrt((cx - px) ** 2 + (cy - py) ** 2)
+        draw.ellipse([cx - d, cy - d, cx + d, cy + d], outline=1, fill=1)
+    elif shape_type == "rectangle":
+        assert len(xy) == 2, "Shape of shape_type=rectangle must have 2 points"
+        draw.rectangle(xy, outline=1, fill=1)
+    elif shape_type == "line":
+        assert len(xy) == 2, "Shape of shape_type=line must have 2 points"
+        draw.line(xy=xy, fill=1, width=line_width)
+    elif shape_type == "linestrip":
+        draw.line(xy=xy, fill=1, width=line_width)
+    elif shape_type == "point":
+        assert len(xy) == 1, "Shape of shape_type=point must have 1 points"
+        cx, cy = xy[0]
+        r = point_size
+        draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=1, fill=1)
+    else:
+        assert len(xy) > 2, "Polygon must have points more than 2"
+        draw.polygon(xy=xy, outline=1, fill=1)
+    mask = np.array(mask, dtype=bool)
+    return mask
 
+def boost(points):
+    height = points[1][1]-points[0][1]
+    width = points[1][0] - points[0][0]
+    if height*0.8 <= 50 or width*0.8 <= 50:
+        return points
+    points[0][0] += width*0.1
+    points[1][0] -= width*0.1
+    points[0][1] += height*0.1
+    points[1][1] -= height*0.1
+    height = int(points[1][1]-points[0][1])
+    width = int(points[1][0] - points[0][0])
+
+    minwidth = int(width*0.6)
+    maxwidth = int(width*0.95)
+    minheight = int(height*0.6)
+    maxheight = int(height*0.95)
+
+    select_width = random.randint(minwidth, maxwidth)
+    select_height = random.randint(minheight, maxheight)
+    points[0][0] = random.randint(int(points[0][0]), int(points[1][0])-select_width)
+    points[1][0] = points[0][0]+select_width
+    points[0][1] = random.randint(int(points[0][1]), int(points[1][1])-select_height)
+    points[1][1] = points[0][1]+select_height
+    return points
+
+def shapes_to_label(img_shape, shapes, label_name_to_value, need_booststrap=False):
+    cls = np.zeros(img_shape[:2], dtype=np.int32)
+    cls_copy = np.zeros(img_shape[:2], dtype=np.int32)
+    instances = []
+    for shape in shapes:
+        points = shape["points"]
+        label = shape["label"]
+        
+        group_id = shape.get("group_id")
+        if group_id is None:
+            group_id = uuid.uuid1()
+        shape_type = shape.get("shape_type", None)
+
+        cls_name = label
+        instance = (cls_name, group_id)
+
+        if instance not in instances:
+            instances.append(instance)
+        cls_id = label_name_to_value[cls_name]
+        
+        mask = shape_to_mask(img_shape[:2], points, shape_type)
+        cls[mask] = cls_id
+        
+        if label in ['figure', 'table'] and need_booststrap:
+            points = boost(points)
+            mask = shape_to_mask(img_shape[:2], points, shape_type)
+        cls_copy[mask] = cls_id
+    return cls, cls_copy
 def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
@@ -80,9 +164,7 @@ def main():
 
     if args.booststrap:
         ftrain = open(os.path.join(args.output_dir,"ImageSets",'Segmentation',"train.txt"),"w")
-        ftest = open(os.path.join(args.output_dir,"ImageSets",'Segmentation',"val.txt"),"w")
-        faug = open(os.path.join(args.output_dir,"ImageSets",'Segmentation',"aug.txt"),"w")
-        faug.close()
+        
     print("num of train_imgs, and num of test_imgs: ", len(train_imgs), len(test_imgs))
     for idx, filename in enumerate(train_imgs+test_imgs):
         print("idx: ", idx, " Generating dataset from:", filename)
@@ -109,11 +191,11 @@ def main():
         if c == 4:
             img = np.array(Image.fromarray(img, 'RGBA').convert('RGB'))
 
-        lbl, lblcopy = labelme.utils.shapes_to_label(
+        lbl, lblcopy = shapes_to_label(
             img_shape=img.shape,
             shapes=label_file.shapes,
             label_name_to_value=class_name_to_id,
-            need_erode = args.booststrap
+            need_booststrap = args.booststrap
         )
         
         
