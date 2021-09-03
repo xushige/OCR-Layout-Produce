@@ -1,11 +1,11 @@
-## ocr-版面构造引擎
+## ocr-版面构造
 
 1. 修改配置文件
 * 配置文件路径：ocr-dataproduce/utils/config.py
 * 版面构造需要各种语料，以字典形式分为中英文，修改对应目录即可
 
 2. 数据构造
-运行构造数据主函数文件路径：python doc_gen_main.py。
+运行构造数据主函数文件路径：python doc_gen_main.py
 
 3. 转换数据格式
 构造的数据集格式的label是labelme格式的，在训练时要转换成voc或者coco格式的形式才可训练。
