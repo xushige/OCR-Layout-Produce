@@ -8,7 +8,7 @@
 运行构造数据主函数文件路径：python doc_gen_main.py 【PATTERN 从cv，nlp，ppt中选择模式与用途】
 
 ## 转换数据格式
-构造的数据集格式的label是labelme格式的，在训练时要转换成voc或者coco格式的形式才可训练。
+构造的数据集格式的label是labelme格式的，在训练时要转换成voc（coco）格式的形式才可训练。
 
 * MotherFolder/ImageSets/Segmentation/train.txt：存放训练集中每个图片的文件名，文件名不包括后缀名（如训练集图片10000.jpg存为10000）
 * MotherFolder/ImageSets/Segmentation/test.txt:存放增强训练集中每个图片的文件名，文件名不包括后缀名（如增强集图片10000.jpg存为10000）
