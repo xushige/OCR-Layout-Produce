@@ -3,8 +3,8 @@
 ## 修改配置文件
 * 配置文件路径：OCR-Layout-Produce/utils/config.py
 * 主要修改
-#### ——self.img_num【生成图片数量，默认10】
-#### ——self.output_dir【生成图片和label的保存位置，默认OCR-Layout-Produce/gen_out】
+1.——self.img_num【生成图片数量，默认10】
+2.——self.output_dir【生成图片和label的保存位置，默认OCR-Layout-Produce/gen_out】
 * 版面构造需要各种语料/图料/表料，以字典形式分为中英文，修改对应目录即可
 
 ## 数据构造
