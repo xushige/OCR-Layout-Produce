@@ -3,8 +3,8 @@
 ## 修改配置文件
 * 配置文件路径：OCR-Layout-Produce/utils/config.py
 * 主要修改
-————self.img_num【生成图片数量，默认10】
-————self.output_dir【生成图片和label的保存位置，默认OCR-Layout-Produce/gen_out】
+** ——self.img_num【生成图片数量，默认10】
+** ——self.output_dir【生成图片和label的保存位置，默认OCR-Layout-Produce/gen_out】
 * 版面构造需要各种语料/图料/表料，以字典形式分为中英文，修改对应目录即可
 
 ## 数据构造
@@ -15,9 +15,9 @@ $ python doc_gen_main.py
 ```
 
 ## 转换数据格式
-数据构造完毕后，因为构造的数据集格式的label是labelme格式的，所以在训练时要转换成voc（coco）格式的形式才可训练。
-需要利用OCR-Layout-Produce/labelme/examples/semantic_segmentation/labelme2voc.py将labelme格式label转成voc格式标签。
-首先在OCR-Layout-Produce/labelme/examples/semantic_segmentation/labels.txt中写入所有的类别，然后运行如下程序：
+* 数据构造完毕后，因为构造的数据集格式的label是labelme格式的，所以在训练时要转换成voc（coco）格式的形式才可训练。
+* 需要利用OCR-Layout-Produce/labelme/examples/semantic_segmentation/labelme2voc.py将labelme格式label转成voc格式标签。
+* 首先在OCR-Layout-Produce/labelme/examples/semantic_segmentation/labels.txt中写入所有的类别，然后运行如下程序：
 ```
 $ cd OCR-Layout-Produce
 $ python ./labelme/examples/semantic_segmentation/labelme2voc.py --input_dirs ./gen_out --test_dir ./
