@@ -1,4 +1,4 @@
-# ocr-版面构造
+# OCR-版面构造
 ### 支持CV/NLP的labelme标注形式中英文“类真实“版面构造【目前只放了小部分中文语料】
 ## 修改配置文件
 * 配置文件路径：OCR-Layout-Produce/utils/config.py
