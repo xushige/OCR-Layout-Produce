@@ -144,21 +144,19 @@ def find_close_fast(arr, e, imgdict, box_area):
     setarr = list(set(arr))
     low = 0
     high = len(setarr) - 1
-    idx = 0
-    while low <= high:
-        mid = int((low + high) / 2)
-        if e == setarr[mid] or mid == low:
-            idx = mid
+    mid = (low + high) // 2
+    while low < high:
+        if e == setarr[mid]:
             break
         elif e > setarr[mid]:
-            low = mid
+            low = mid + 1
         elif e < setarr[mid]:
             high = mid
-    if idx + 1 < len(setarr) and abs(e - setarr[idx]) > abs(e - setarr[idx + 1]):
-        idx += 1
+        mid = (low + high) // 2
+    idx = mid
+    final_idx = arr.index(setarr[idx])
     range = 5
-    # final_idx = arr.index(setarr[idx])
-    resize_degree = 10000
+    resize_degree = 1000
     start = idx-range if idx-range >= 0 else 0
     for eachitem in setarr[start: idx+range+1]:
         returnimg = imgdict[arr.index(eachitem)]

@@ -5,8 +5,9 @@ from utils.config import Config
 from utils.util import *
 from dataset.publaynet import Publaynet
 import random
+import pickle
 DEBUG_PUBLAYOUT = False
-PATTERN = 'nlp' # choose from ['nlp', 'cv', 'ppt']
+PATTERN = 'cv' # choose from ['nlp', 'cv', 'ppt']
 class batch_document_generator(object):
     def __init__(self, label_path, image_nums, figure_loader, text_loader, table_loader, 
     seal_loader, printing_equation_loader, handwritten_loader, tubiao_loader, 
@@ -66,12 +67,14 @@ class batch_document_generator(object):
                 print ("current layout: ", example)
                 if PATTERN != 'ppt':
                     #没有图和表就跳过版面
-                    if (not len(bbox_dict["table"]) and not len(bbox_dict["figure"])):
+                    if not bbox_dict["text"] or not bbox_dict["table"] and not bbox_dict["figure"]:
+                        del modeselect[example]
                         continue
                     try:
                         #空白处理
                         bbox_dict = space_fill(bbox_dict, width, height, title_height_range=(25, 40), fill_degree=0.9, pattern=pattern, need_check=True)
                     except:
+                        del modeselect[example]
                         continue
                     # 模式切换，单栏双栏接近50%概率
                     if random.randint(0, 1):
@@ -80,7 +83,7 @@ class batch_document_generator(object):
                         pattern = 'single'
                     # 经过space-fill后该版面被抛弃，则有10%概率使用自定义版面，90%概率选择下一张版面
                     if not bbox_dict:
-                        if random.randint(0, 10) == 0:
+                        if random.randint(0, 9) == 0:
                             #自定义版面
                             bbox_dict, width, height = makepage()
                             try:
@@ -89,6 +92,7 @@ class batch_document_generator(object):
                                 pass
                         else:
                             continue
+                    bbox_dict, width, height = makepage()
                 print("img_id: ", img_id)
                 imgname = "%s_%07d.jpg" % (os.path.basename(output_dir), img_id)
                 
@@ -119,6 +123,8 @@ class batch_document_generator(object):
                 clslabel[imgname] = 0
                 img_id += 1
         txt.close()
+        with open(os.path.join(self.label_path, "publaynet_train.pkl"), "wb") as f:
+            pickle.dump(modeselect, f)
         if not os.path.exists(output_dir+'/cls_label'):
             os.makedirs(output_dir+'/cls_label')
         with open(output_dir+'/cls_label/cls_label.json', 'w') as w:

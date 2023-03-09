@@ -105,8 +105,8 @@ def main():
    
     parser.add_argument('--input_dirs', nargs='+')
     parser.add_argument("--test_dir", help="test dataset directory")
-    parser.add_argument("--output_dir", help="output dataset directory")
-    parser.add_argument("--labels", help="labels file", required=True)
+    parser.add_argument("--output_dir", help="output dataset directory", default='segmentation_out')
+    parser.add_argument("--labels", help="labels file", default='labelme/examples/semantic_segmentation/labels.txt')
     parser.add_argument("--noviz", help="no visualization", action="store_true")
     parser.add_argument('--booststrap', action='store_true', default=False,
                         help='booststrap')
@@ -202,10 +202,10 @@ def main():
         if not os.path.exists(os.path.dirname(out_png_file)):
             os.makedirs(os.path.dirname(out_png_file))
         
-        labelme.utils.lblsave(out_png_file, lbl, pattern='voc')
+        labelme.utils.lblsave(out_png_file, lbl)
         if (lblcopy != lbl).any() and filename not in test_imgs:
             print('booststrap')
-            labelme.utils.lblsave(out_png_file[:-4]+'_booststrap.png', lblcopy, pattern='voc')
+            labelme.utils.lblsave(out_png_file[:-4]+'_booststrap.png', lblcopy)
             mask = lblcopy==0
             img[mask] = img[mask].mean(0)
             Image.fromarray(img).save(out_img_file[:-4]+'_booststrap.jpg')
@@ -214,7 +214,7 @@ def main():
         if not args.noviz:
             viz = imgviz.label2rgb(
                 label=lbl,
-                img=imgviz.rgb2gray(img),
+                image=imgviz.rgb2gray(img),
                 font_size=15,
                 label_names=class_names,
                 loc="rb",

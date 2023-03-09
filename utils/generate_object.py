@@ -9,7 +9,7 @@ import re
 needimg = True #是否需要图片
 DEBUG = False
 MARGIN_CROP = True #去除图片白边
-EQUATION_HEIGHT = [i for i in range(35, 55)] #公式box高度设置
+EQUATION_HEIGHT = [i for i in range(105, 140)] #公式box高度设置
 nlpdict = {'figure': 1, 'textline': 21, 'list': 22, 'section': 23, 'date': 24, 'title': 25, 'author': 26, 'abstract': 27, 'reference': 28, 'caption': 29, 'table': 3, 'header': 4, 'footer': 41, 'handwriting': 5, 'equation': 8, 'textequation': 81, 'seal': 9, 'watermark': 10, 'verticaldividingline': 11, 'backgroundcolor': 12, 'ValidLine': 13}
 
 class figure_loader:
@@ -253,7 +253,7 @@ class list_loader(object):
             tem_str = next(self.reader).strip()
             if (tem_str.isprintable()):
                 object += tem_str
-        return object
+        return object[:charnum]
     def random_select_language(self, language=None):
         self.language = random.choice(['Chinese', 'English']) if not language else language
         readerlist = self.read_dict[self.language]
@@ -283,7 +283,7 @@ class footer_loader(object):
         if (tem_str.isprintable()):
             object = tem_str
         
-        return object
+        return tem_str
     def random_select_language(self, language=None):
         self.language = random.choice(['Chinese', 'English']) if not language else language
         readerlist = self.read_dict[self.language]
@@ -313,7 +313,7 @@ class header_loader(object):
         if (tem_str.isprintable()):
             object = tem_str
         
-        return object
+        return tem_str
     def random_select_language(self, language=None):
         self.language = random.choice(['Chinese', 'English']) if not language else language
         readerlist = self.read_dict[self.language]
@@ -343,7 +343,7 @@ class caption_loader(object):
         if (tem_str.isprintable()):
             object = tem_str
         
-        return object
+        return tem_str
     def random_select_language(self, language=None):
         self.language = random.choice(['Chinese', 'English']) if not language else language
         readerlist = self.read_dict[self.language]
@@ -373,7 +373,7 @@ class title_loader(object):
         if (tem_str.isprintable()):
             object = tem_str
         
-        return object
+        return tem_str
     def random_select_language(self, language=None):
         self.language = random.choice(['Chinese', 'English']) if not language else language
         readerlist = self.read_dict[self.language]
@@ -403,7 +403,7 @@ class TITLE_loader(object):
         if (tem_str.isprintable()):
             object = tem_str
         
-        return object
+        return tem_str
     def random_select_language(self, language=None):
         self.language = random.choice(['Chinese', 'English']) if not language else language
         readerlist = self.read_dict[self.language]
@@ -433,7 +433,7 @@ class author_loader(object):
         if (tem_str.isprintable()):
             object = tem_str
         
-        return object
+        return tem_str
     def random_select_language(self, language=None):
         self.language = random.choice(['Chinese', 'English']) if not language else language
         readerlist = self.read_dict[self.language]
@@ -463,7 +463,7 @@ class date_loader(object):
         if (tem_str.isprintable()):
             object = tem_str
         
-        return object
+        return tem_str
     def random_select_language(self, language=None):
         self.language = random.choice(['Chinese', 'English']) if not language else language
         readerlist = self.read_dict[self.language]
@@ -494,7 +494,7 @@ class abstract_loader(object):
             if (tem_str.isprintable()):
                 object += tem_str
         
-        return object
+        return object[:charnums]
     def random_select_language(self, language=None):
         self.language = random.choice(['Chinese', 'English']) if not language else language
         readerlist = self.read_dict[self.language]
@@ -541,7 +541,7 @@ class text_loader(object):
             tem_str = next(self.text_reader).rstrip().strip(" ")
             if (tem_str.isprintable()):
                 text += tem_str
-        return text
+        return text[:char_nums]
     def random_select_language(self, language=None):
         self.language = random.choice(['Chinese', 'English']) if not language else language
         textreaderlist = self.read_text_dict[self.language]
@@ -654,7 +654,7 @@ class document_generator(object):
         self.pattern = pattern # 模式选择 ppt， cv， nlp 三选一
         self.ppt_label = [] # ppt-label
         self.ddsn_label = [] # cv-label
-        self.reshape_ratio = random.randint(100, 200) * 1.0 / 100  # 版面高宽比
+        self.reshape_ratio = random.randint(100, 150) * 1.0 / 100  # 版面高宽比
         if self.pattern == 'ppt':
             self.reshape_ratio = 1/self.reshape_ratio # ppt高小于宽，所以比例取倒数
         self.reshape_height = 1684 #填充语料时固定高度1684（测试集高度的中位数）为基准，方便设置字号，行间距等
@@ -668,7 +668,7 @@ class document_generator(object):
         if self.pattern == 'ppt':
             self.final_width = random.randint(10, 14)*100
         else:
-            self.final_width = random.randint(7, 10)*100 
+            self.final_width = random.randint(7, 11)*100 
         self.final_height = int(self.final_width * self.reshape_ratio) #高宽比不变，得出最终的高度，相当于整体缩放
         self.x_ratio = self.final_width / self.reshape_width #在宽度上缩放比率，用于最后对point进行缩放
         self.y_ratio = self.final_height / self.reshape_height #在高度上缩放比率，用于最后对point进行缩放
@@ -751,7 +751,7 @@ class document_generator(object):
         self.author_loader = author_loader
         self.date_loader = date_loader
         #版面语言确定
-        self.select = None
+        self.select = 'Chinese' # 默认中文，如需英文需要在utils/config.py中添加英文预料文件
         self.select = self.text_loader.random_select_language(self.select)  # 随机选择语言
         self.title_loader.random_select_language(self.select)
         self.TITLE_loader.random_select_language(self.select)
@@ -1840,7 +1840,10 @@ class document_generator(object):
             start = ''
             # 是否加小数点
             if random.randint(0, 1):
-                start += '.' + str(random.randint(1, 9))
+                if random.randint(0, 1):
+                    start += '.' + str(random.randint(1, 9))
+                else:
+                    start += '-' + str(random.randint(1, 9))
             # 是否加冒号
             if random.randint(0, 1):
                 start += ':' if self.select == 1 else '.'

@@ -38,7 +38,7 @@ class Publaynet(object):
     def __init__(self,label_path):
         super(Publaynet,self).__init__()
         self.label_path = label_path
-        self.train_examples = get_examples(label_path,"train")
+        self.train_examples = get_examples(label_path,"train") 
         self.val_examples = get_examples(label_path,"val")
         self.all_examples = None
 

@@ -3,90 +3,87 @@ class Config(object):
     def __init__(self):
         super(Config, self).__init__()
         
-        self.img_num = 10000
-        self.output_dir = "" #输出目录
+        self.img_num = 10
+        self.output_dir = "gen_out" #输出目录
         
-        self.bg_dir = "background-imgdir-path"
-        self.fonts_dir = "fonts-dir-path"
-        #字典后数字为倍数衡
+        self.bg_dir = "elements/backgrounds/normal"
+        self.fonts_dir = "elements/fonts"
+        #字典后数字为复制倍数，以防预料/图料不够
         self.figure_path_dict = {
-            "figdir-0": 200,
-            "figdir-1": 100,
-            "figdir-2": 600,
-            "figdir-3": 100
+            "elements/figure": 2000
         }
         self.text_file_path = {'Chinese': [
-                                            "text-cn-file"
+                                            "elements/text/wiki_zh_2019.txt"
                                           ],
                                 'English': [
                                             "text-En-file"
                                            ]
         }
         self.date_path_dict = {'Chinese': [
-                                            "date-cn-file"
+                                            "elements/text/date.txt"
                                           ],
                                 'English': [
                                             "date-En-file"
                                            ]
         }
         self.author_path_dict = {'Chinese': [
-                                            "author-cn-file"
+                                            "elements/text/author.txt"
                                           ],
                                 'English': [
                                             "author-En-file"
                                            ]
         }
         self.TITLE_path_dict = {'Chinese': [
-                                            "TITLE-cn-file"
+                                            "elements/text/title.txt"
                                           ],
                                 'English': [
                                             "TITLE-En-file"
                                            ]
         }
         self.title_path_dict = {'Chinese': [
-                                            "title-cn-file"
+                                            "elements/text/section.txt"
                                           ],
                                 'English': [
                                             "title-En-file"
                                            ]
         }
         self.header_path_dict = {'Chinese': [
-                                            "header-cn-file"
+                                            "elements/text/foot_head.txt"
                                           ],
                                 'English': [
                                             "header-En-file"
                                            ]
         }
         self.footer_path_dict = {'Chinese': [
-                                            "footer-cn-file"
+                                            "elements/text/foot_head.txt"
                                           ],
                                 'English': [
                                             "footer-En-file"
                                            ]
         }
         self.caption_path_dict = {'Chinese': [
-                                            "caption-cn-file"
+                                            "elements/text/caption.txt"
                                           ],
                                 'English': [
                                             "caption-En-file"
                                            ]
         }
         self.list_path_dict = {'Chinese': [
-                                            "list-cn-file"
+                                            "elements/text/list.txt"
                                           ],
                                 'English': [
                                             "list-En-file"
                                            ]
         }
         self.reference_path_dict = {'Chinese': [
-                                            "reference-cn-file"
+                                            "elements/text/reference.txt"
                                           ],
                                 'English': [
                                             "reference-En-file"
                                            ]
         }
         self.abstract_path_dict = {'Chinese': [
-                                            "abstract-cn-file"
+                                            "elements/text/abstract.txt"
                                           ],
                                 'English': [
                                             "abstract-En-file"
@@ -94,27 +91,25 @@ class Config(object):
         }
         
         self.table_path_dict = {
-            "tabledir-0": 200,
-            "tabledir-1": 150,
-            "tabledir-2": 100
+            "elements/table": 2000,
         }
         self.seal_path_dict = {
             "seal-dir": 10
         }
         self.equation_path_dict = {
-            "equation-dir": 10
+            "elements/equation": 2000
         }
         self.handwritten_path_dict = {
             "handwritten-dir": 10
         }
         self.logo_path_dict = {
-            "logo-dir":10
+            "elements/head_foot_fig":2000
         }
-        self.publaynet_label_path = "publaynet-dir" # 包含publay的train.json 和 test.json
+        self.publaynet_label_path = "elements/layout" # 包含publay的json文件，这里只放了val.json
         
         #ppt版面和背景
-        self.ppt_label_path = "ppt_layout-dir"
-        self.ppt_backgroud_path = 'ppt_background-dir'
+        self.ppt_label_path = "elements/layout" # 需要自行标注ppt版面的label，这里暂时用通用publaynet版面
+        self.ppt_backgroud_path = 'elements/backgrounds/normal' # 暂用纯白，与通用版面一致
         
 
 
